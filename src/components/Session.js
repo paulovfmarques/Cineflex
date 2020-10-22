@@ -28,4 +28,8 @@ const ContainerSession = styled.div`
     width: 100%;
     height: auto;
     overflow-y: scroll;
+
+    h1{
+        margin:85px 0 10px 0;
+    }
 `;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export default function Conclusion(){
 
-    const { selected,timeSelected } = useContext(UserContext);
+    const { selected,timeSelected,arraySeat, } = useContext(UserContext);   
 
     return(        
         <ContainerCheckout>
@@ -13,8 +13,7 @@ export default function Conclusion(){
             <p>{selected.title}</p>
             <p>{timeSelected.date} - {timeSelected.time.name}</p>
             <SeatsCheckout>
-                <p>Assento 23</p>
-                <p>Assento 45</p>
+                {arraySeat && arraySeat.map(seat => <p key={seat.id}>Assento {seat.name}</p>)}
             </SeatsCheckout>
             <ButtonDiv><Link to="/"><button>Início</button></Link></ButtonDiv>
         </ContainerCheckout>        

@@ -7,8 +7,7 @@ export default function Main(){
 
     const { arrayMovies, setSelected, timeSelected, setTimeSelected } = useContext(UserContext);
 
-    if(timeSelected !== "") setTimeSelected("");
-    
+    if(timeSelected !== "") setTimeSelected("");   
 
     return(
         <>
@@ -25,11 +24,12 @@ export default function Main(){
 };
 
 const ContainerList = styled.div`
+    z-index:2;
     display: flex;
     justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    height: 100vh;
-    overflow-y: scroll; 
+    height: auto;
+    overflow-y: scroll;    
 `;

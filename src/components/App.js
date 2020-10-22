@@ -48,4 +48,5 @@ const ContainerHeader = styled.div`
   color: orangered;
   background-color: rgb(224, 224, 224);
   box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.55);
+  border-radius: 0 0 10px 10px;
 `;

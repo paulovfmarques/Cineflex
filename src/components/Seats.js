@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { MdEventSeat } from 'react-icons/md';
@@ -8,9 +9,29 @@ import Footer from './Footer';
 
 export default function Seats(){
 
-    const { timeSelected } = useContext(UserContext);
-
+    const { timeSelected,arraySeat,setArraySeat } = useContext(UserContext);
     const { seats } = timeSelected.time;
+    
+    function sendRequest(){
+        const arrayIds = arraySeat.map(seat => seat = seat.id)
+        const req = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/cineflex/seats/book_many/",{"ids":arrayIds})
+    }
+
+    function selectSeat(seat){        
+
+        if(!seat.isAvailable){
+            alert("Assento não disponível!")
+            return;
+        }        
+
+        const isSelected = arraySeat.some(s => s.name === seat.name);
+
+        if(isSelected){
+            setArraySeat([...arraySeat.filter(s => s.name !== seat.name)])
+        }else{
+            setArraySeat([...arraySeat,seat])
+        }       
+    }    
 
     return(
         <>
@@ -20,10 +41,12 @@ export default function Seats(){
 
             <ContainerSeatsSelection>
                 {seats && seats.map(seat =>
-                    <div key={seat.id} className="seat-box">
-                        <MdEventSeat className={seat.isAvailable ? "seat" : "seat not-available"} />
+                    <SeatBox onClick={() => selectSeat(seat)} key={seat.id}>
+                        <Icone 
+                        available={(seat.isAvailable).toString()}
+                        isselected={(arraySeat && arraySeat.some(s => s.name === seat.name)).toString()} />
                         <p>{seat.name}</p>
-                    </div>
+                    </SeatBox>
                 )}
             </ContainerSeatsSelection>
 
@@ -31,7 +54,15 @@ export default function Seats(){
             <Selection><IoMdSquare/>Disponivel</Selection>
             <Selection className="seatTaken"><IoIosSad/>Ocupado</Selection>
 
-            <BookSeatButton><Link to="/conclusion"><button>Reservar assento(s)</button></Link></BookSeatButton>
+            <BookSeatButton arrSeat={arraySeat}>
+                <Link to="/conclusion">
+                    <button 
+                    disabled={arraySeat && arraySeat.length > 0 ? false : true}
+                    onClick={() => sendRequest()}>
+                        Reservar assento(s)
+                    </button>
+                </Link>
+            </BookSeatButton>
 
         </ContainerSeats>
         
@@ -40,25 +71,34 @@ export default function Seats(){
     );
 };
 
+const Icone = styled(MdEventSeat)`
+    color: ${props => 
+    props.available === "true" 
+    ? (props.isselected === "true" ? "coral" : "black") 
+    : "rgb(146, 0, 0)"};
+
+    font-size: 30px;
+    cursor: pointer;
+`;
+
 const ContainerSeats = styled.div`
     padding: 10px 10px 150px 10px;
     width: 100%;
     height: auto;
-    overflow-y: scroll;    
+    overflow-y: scroll;
 
-    .seat-box{
-        margin: 3px;
-        text-align: center;
+    .selected{
+        color: coral;
     }
+    
+    h1{
+        margin:85px 0 10px 0;
+    }       
+`;
 
-    .seat{
-        font-size: 30px;
-        cursor: pointer;
-    }   
-
-    .not-available{
-        color: rgb(146, 0, 0);
-    }
+const SeatBox = styled.div`
+    margin: 3px;
+    text-align: center;
 `;
 
 const ContainerSeatsSelection = styled.div`
@@ -91,7 +131,7 @@ const BookSeatButton = styled.div`
     justify-content:center;
     align-items:center;
 
-    button{
+    button{        
         border: none;
         color: white;
         font-weight: bold;
@@ -100,7 +140,7 @@ const BookSeatButton = styled.div`
         width: auto;
         height: 30px;
         border-radius: 5px;
-        background-color: coral;
+        background-color: ${props => props.arrSeat && props.arrSeat.length > 0 ? "coral" : "slategray"};
         box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.7);
     }    
 `;
