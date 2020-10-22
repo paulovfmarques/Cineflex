@@ -4,7 +4,9 @@ import UserContext from '../contexts/UserContext'
 
 export default function Main(){
 
-    const { arrayMovies, setSelected } = useContext(UserContext);
+    const { arrayMovies, setSelected, timeSelected, setTimeSelected } = useContext(UserContext);
+
+    if(timeSelected !== "") setTimeSelected("");
     
 
     return(
