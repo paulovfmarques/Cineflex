@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom'
-import Showtimes from './Showtimes'
-import UserContext from '../contexts/UserContext'
-import Footer from './Footer'
+import { useParams } from 'react-router-dom';
+import Showtimes from './Showtimes';
+import UserContext from '../contexts/UserContext';
+import Footer from './Footer';
+import styled from 'styled-components';
 
 export default function Session(){
 
@@ -13,11 +14,18 @@ export default function Session(){
 
     return(
         <>
-            <main className="session-container">
+            <ContainerSession>
                 <h1>Selecione o horario</h1>
                 {days && days.map(day => <Showtimes key={day.id} day={day}/>)}
-            </main>
+            </ContainerSession>
             <Footer/>
         </>
     );
-}
+};
+
+const ContainerSession = styled.div`
+    padding: 10px 10px 150px 10px;
+    width: 100%;
+    height: auto;
+    overflow-y: scroll;
+`;
