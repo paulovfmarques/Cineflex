@@ -5,7 +5,7 @@
 Cineflex
 </h1>
 
-<p align="center">A little description about your project</p>
+<p align="center">A Single Page Aplication, simulating a mobile app for buying movie tickets</p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
@@ -15,13 +15,18 @@ Cineflex
 
 ## Features
 [//]: # (Add the features of your project here:)
-This app features all the latest tools and practices in mobile development!
+This app features the following tecnology:
 
 - ⚛️ **React Js** — A JavaScript library for building user interfaces
 
 ## Getting started
 
-Describe here the way to use/install your project
+Move yourself to the project directory:
+
+  1. Run <strong>npm install</strong>;
+  2.  Run <strong>npx webpack serve</strong>;
+  3. Open http://localhost:9000/ on your browser;
+  4. For a better experience, inspect the page and enable the mobile visualization.
 
 
 ## License
